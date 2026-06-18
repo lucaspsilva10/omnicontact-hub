@@ -8,7 +8,7 @@ customerRoutes.get("/clientes", (req, res) => {
   return customerController.listar(req, res);
 });
 
-customerRoutes.get("/cliente/:id", (req,res)=>{
+customerRoutes.get("/clientes/:id", (req,res)=>{
   return customerController.buscarPorId(req,res);
 })
 
