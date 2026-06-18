@@ -20,7 +20,7 @@ export class CustomerService {
     return cliente;
   }
 
-  autualizarCliente(id: string, dados: Omit<Cliente, "id">){
+  atualizarCliente(id: string, dados: Omit<Cliente, "id">){
     const clienteIndex = clientes.findIndex((cliente) => cliente.id ===id);
     
     if (clienteIndex === -1){
