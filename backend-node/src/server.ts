@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import healthRoutes from "./routes/health.routes";
 import customerRoutes from "./routes/customer.routes";
 import { errorHandler } from "./middlewares/errorHandler";
+import { notFoundHandler } from "./middlewares/notFoundHandler";
 
 dotenv.config();
 
@@ -15,6 +16,7 @@ app.use(express.json());
 app.use(healthRoutes);
 app.use(customerRoutes);
 
+app.use(notFoundHandler);
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 3333;
