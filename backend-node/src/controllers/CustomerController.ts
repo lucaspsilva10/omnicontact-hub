@@ -1,12 +1,15 @@
 import { Request, Response } from "express";
 import { CustomerService } from "../services/CustomerService";
 import { criarClienteSchema, atualizarClienteSchema } from "../schemas/cliente.schema";
+import { respostaSucesso } from "../utils/apiResponse";
 
 export class CustomerController {
   private customerService = new CustomerService();
 
   listar(req: Request, res: Response) {
-    return res.json(this.customerService.listarClientes());
+    const clientes = this.customerService.listarClientes();
+
+    return respostaSucesso(res, 200, "Clientes listados com sucesso", clientes);
   }
 
   buscarPorId(req: Request, res: Response){
@@ -26,7 +29,7 @@ export class CustomerController {
 
     const cliente = this.customerService.criarCliente(dadosValidados);
 
-    return res.status(201).json(cliente);
+    return respostaSucesso(res, 201, "Cliente criado com sucesso", cliente);
   }
 
   atualizar(req: Request, res: Response){
