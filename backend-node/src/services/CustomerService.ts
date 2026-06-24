@@ -1,12 +1,17 @@
 import { Cliente, clientes } from "../data/clientes";
+import { CustomerRepository } from "../repositories/CustomerRepository";
 
 export class CustomerService {
+  
+  private customerRepository = new CustomerRepository();
+  
   listarClientes() {
     return clientes;
   }
 
   buscarClientePorId(id: string){
-    return clientes.find((cliente) => cliente.id === id);
+    
+    return this.customerRepository.buscarPorId(id);
   }
 
   criarCliente(dados: Omit<Cliente, "id">) {
@@ -15,35 +20,21 @@ export class CustomerService {
       ...dados,
     };
 
-    clientes.push(cliente);
+    this.customerRepository.criar(cliente)
 
     return cliente;
   }
 
   atualizarCliente(id: string, dados: Omit<Cliente, "id">){
-    const clienteIndex = clientes.findIndex((cliente) => cliente.id ===id);
-    
-    if (clienteIndex === -1){
-      return null;
-    }
-
-    clientes[clienteIndex] = {
+    const clienteAtualizado: Cliente = {
       id,
       ...dados,
     };
 
-    return clientes[clienteIndex];
+    return this.customerRepository.atualizar(id, clienteAtualizado);
   }
 
   deletarCliente(id: string){
-    const clienteIndex = clientes.findIndex((cliente) => cliente.id === id);
-
-    if(clienteIndex === -1){
-      return null;
-    }
-
-    clientes.splice(clienteIndex, 1);
-
-    return true;
+    return this.customerRepository.deletar(id);
   }
 }
